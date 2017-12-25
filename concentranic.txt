@@ -1,0 +1,12 @@
+    bot.on('callback_query', query => {
+        bot.sendMessage(query.message.chat.id, `Оставьте свой номер телефона для связи с вами:`, {
+            reply_markup: {
+                keyboard: [
+                    [{
+                        text: '📱 Оставить номер',
+                        request_contact: true
+                    }],
+                ]
+            }
+        })
+    })

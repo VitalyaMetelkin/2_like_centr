@@ -1,0 +1,91 @@
+bot.on('message', msg => {
+    const chatId = msg.chat.id
+    if (msg.text === 'Не работает экран') {
+        bot.sendMessage(chatId, 'Не переживайте!) Возможно, это просто сбой системы. Попробуйте перезагрузить ваш девайс. Для этого одновременно нажмите кнопку блокировки экрана и кнопку "Home" и дождитесь легкой вибрации.\n' +
+            '\n' +
+            'Если после перезагрузки экран все же не загорелся, рекомендуем обратиться в наш сервисный центр. Оставьте заявку и наш мастер подъедет туда, где вам будет удобно. Нажмите на кнопку "Бесплатная консультация"\n' +
+            '\n' +
+            '- Профессиональный ремонт при вас\n' +
+            '- Гарантия от 3х до 12-ти месяцев\n' +
+            '- Всегда приезжаем вовремя', {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: 'Бесплатная консультация',
+                            callback_data: JSON.stringify({
+                                type: ACTION_TYPE.FREE_CONSULTATION
+                            })
+                        }
+                    ],
+                    [
+                        {
+                            text: 'Назад',
+                            callback_data: JSON.stringify ({
+                                type: ACTION_TYPE.NAZAD
+                            })
+                        }
+                    ]
+                ]
+            }
+        })
+    }
+})
+
+const {type} = data
+
+if (type === ACTION_TYPE.FREE_CONSULTATION) {
+    bot.on('callback_query', query => {
+        bot.sendMessage(query.message.chat.id, `Какая проблема случилась с дисплеем вашего телефона?`, {
+            reply_markup: {
+                keyboard: [
+                    [{
+                        text: 'Отправить местоположение',
+                        request_location: true
+                    }],
+                    [{
+                        text: 'Отправить контакт',
+                        request_contact: true
+                    }],
+                ]
+            }
+
+        })
+    })
+
+} else if (type === ACTION_TYPE.NAZAD) {
+    bot.on('callback_query', query => {
+        bot.sendMessage(query.message.chat.id, `Какая проблема случилась с дисплеем вашего телефона?`, {
+            reply_markup: {keyboard: keyboard.displey}
+        })
+    })
+}
+
+const ACTION_TYPE = {
+    FREE_CONSULTATION: 'fc',
+    NAZAD: 'back'
+}
+
+//bot.on('callback_query', query => {
+ // bot.sendMessage(query.message.chat.id, `Какая проблема случилась с дисплеем вашего телефона?`, {
+//       reply_markup: {keyboard: keyboard.displey}
+
+//})
+// })
+
+//bot.on('callback_query', query => {
+ //   bot.sendMessage(query.message.chat.id, `Какая проблема случилась с дисплеем вашего телефона?`, {
+   //     reply_markup: {
+   //         keyboard: [
+   //             [{
+  //            text: 'Отправить местоположение',
+  //                  request_location: true
+       //         }],
+//                [{
+  //                  text: 'Отправить контакт',
+   //                 request_contact: true
+  //              }],
+  //          ]
+  //      }
+//})
+//})

@@ -1,0 +1,164 @@
+const TelegramBot = require('node-telegram-bot-api')
+const config = require('./config')
+const helper = require('./helper')
+const keyboard = require('./keyboard')
+const kb = require('./keyboard-buttons')
+
+
+helper.logStart()
+
+const bot = new TelegramBot(config.TOKEN, {
+  polling: true
+})
+
+bot.on('message', msg => {
+  console.log('Working', msg.from.first_name)
+
+    const chatId = helper.getChatId(msg)
+
+  switch (msg.text) {
+    case kb.home.iphone4s:
+      bot.sendMessage(chatId, `Пожалуйста, укажите то место, где у вашего девайса случилась поломка:`, {
+        reply_markup: {keyboard: keyboard.repair}
+      })
+        break
+      case kb.home.iphone5s:
+          bot.sendMessage(chatId, `Пожалуйста, укажите то место, где у вашего девайса случилась поломка:`, {
+              reply_markup: {keyboard: keyboard.repair}
+          })
+          break
+      case kb.home.iphonese:
+          bot.sendMessage(chatId, `Пожалуйста, укажите то место, где у вашего девайса случилась поломка:`, {
+              reply_markup: {keyboard: keyboard.repair}
+          })
+          break
+      case kb.home.iphone6s:
+          bot.sendMessage(chatId, `Пожалуйста, укажите то место, где у вашего девайса случилась поломка:`, {
+              reply_markup: {keyboard: keyboard.repair}
+          })
+          break
+      case kb.home.iphone7:
+          bot.sendMessage(chatId, `Пожалуйста, укажите то место, где у вашего девайса случилась поломка:`, {
+              reply_markup: {keyboard: keyboard.repair}
+          })
+          break
+      case kb.home.iphone8:
+          bot.sendMessage(chatId, `Пожалуйста, укажите то место, где у вашего девайса случилась поломка:`, {
+              reply_markup: {keyboard: keyboard.repair}
+          })
+          break
+
+
+
+
+      case kb.repair.displey:
+          bot.sendMessage(chatId, `Какая проблема случилась с дисплеем вашего телефона?`, {
+              reply_markup: {keyboard: keyboard.displey}
+          })
+          break
+
+     case kb.back:
+         bot.sendMessage(chatId, `Укажите модель вашего девайса:`, {
+           reply_markup: {keyboard: keyboard.home}
+        })
+        break
+
+      case kb.displey.nazad:
+          bot.sendMessage(chatId, `Пожалуйста, укажите то место, где у вашего девайса случилась поломка:`, {
+              reply_markup: {keyboard: keyboard.repair}
+          })
+          break
+
+      case kb.displey.nerabotaenecran:
+          bot.sendMessage(chatId, `бла бла бла`, {
+              reply_markup: {
+                  remove_keyboard: true
+              }
+          })
+          break
+  }
+})
+
+bot.on('message', msg => {
+    const chatId = msg.chat.id
+    if (msg.text === 'Не работает экран') {
+        bot.sendMessage(chatId, 'Не переживайте!) Возможно, это просто сбой системы. Попробуйте перезагрузить ваш девайс. Для этого одновременно нажмите кнопку блокировки экрана и кнопку "Home" и дождитесь легкой вибрации.\n' +
+            '\n' +
+            'Если после перезагрузки экран все же не загорелся, рекомендуем обратиться в наш сервисный центр. Оставьте заявку и наш мастер подъедет туда, где вам будет удобно. Нажмите на кнопку "Бесплатная консультация"\n' +
+            '\n' +
+            '- Профессиональный ремонт при вас\n' +
+            '- Гарантия от 3х до 12-ти месяцев\n' +
+            '- Всегда приезжаем вовремя', {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: 'Бесплатная консультация',
+                            callback_data: 'first'
+                        }
+                    ],
+                    [
+                        {
+                            text: 'Назад',
+                            callback_data: 'second'
+                        }
+                    ]
+                ]
+            }
+        })
+    }
+})
+
+bot.on('callback_query', query => {
+   bot.sendMessage(query.message.chat.id, `Кнопка "Назад" временно не работает. Для связи с оператором отправьте боту свои телефон и местоположение.`, {
+    reply_markup: {
+          keyboard: [
+              [{
+             text: 'Отправить местоположение',
+                 request_location: true
+             }],
+              [{
+                   text: 'Отправить контакт',
+                    request_contact: true
+                }],
+           ]
+      }
+})
+})
+
+
+bot.onText(/\/start/, msg => {
+
+  const text = `Здравствуйте, ${msg.from.first_name}\nВыберите модель вашего телефона:`
+  bot.sendMessage(helper.getChatId(msg), text, {
+    reply_markup: {
+      keyboard: keyboard.home
+    }
+  })
+
+})
+
+
+
+else if (msg.text === 'Глючит сенсор') {
+        bot.sendMessage(chatId, 'Для сначала прочистите дисплей своего смартфона. Вы ничем ему не навредите, но улучшите соединение, и, возможно, сенсор перестанет виснуть и тормозить. Этот способ поможет, если дисплей не включается, не реагирует на прикосновения или периодически глючит сенсор. \n' +
+            ' \n' +
+            'Если плохо работает сенсор, когда нажимаются кнопки, и он часто виснет, тормозит, рекомендуем обратиться в сервисный центр. Вы получите качественный ремонт с гарантией, а мастер сам подъедет туда, где вам будет удобно. \n' +
+            ' \n' +
+            '- Профессиональный ремонт при вас  \n' +
+            '- Гарантия от 3х до 12-ти месяцев  \n' +
+            '- Всегда приезжаем вовремя \n' +
+            ' \n' +
+            'Нажмите на кнопку "Бесплатная консультация"', {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: 'Бесплатная консультация',
+                            callback_data: 'first'
+                        }
+                    ]
+                ]
+            }
+        })
+    }
